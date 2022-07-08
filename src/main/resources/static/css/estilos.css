@@ -1,0 +1,14 @@
+.rojo {
+	color: red;
+}
+.negrita {
+	font-weight: bold;	
+}
+.asterisco {
+	color: red;
+	/* font-weight: bold; */	
+}
+#flecha {
+	height: 50px;
+	width: 50px;
+}	

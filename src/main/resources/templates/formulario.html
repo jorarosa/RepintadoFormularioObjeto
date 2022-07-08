@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Formulario</title>
+	<link rel="icon" href="data:,">
+	<link rel="stylesheet" href="css/estilos.css" />
+	<script src="js/funciones.js"></script>
+</head>
+<body>
+<h1>Formulario</h1>
+
+<form action="/repintadoFormulario" method="post">
+	<input type = "hidden" value="3.1416" />
+	<label for="nombre">
+		<span class="asterisco">*</span>
+		<span class="negrita">Nombre</span>
+		<input type="text" name="nombre" id="nombre" value="" />
+	</label>
+	<br />
+	<label for="clave">
+		<span class="asterisco">*</span>
+		<span class="negrita">Clave</span>
+		<input type="password" name="clave" id="clave" value="" />
+	</label>
+	<br />
+	<button type="button" onclick="cambiaVisionClaves();"><img th:src="@{/img/ver.png}" width="10" height="10" /></button>
+	<br />
+	<label for="confirmarClave">
+		<span class="asterisco">*</span>
+		<span class="negrita">Confirmar clave</span>
+		<input type="password" name="confirmarClave" id="confirmarClave" value="" />
+	</label>
+	<br />
+	<label for="edad">
+		<span class="asterisco">*</span>
+		<span class="negrita">Edad</span>
+		<input type="text" name="edad" id="edad" value="" />
+	</label>
+	<br />
+	<label for="fechaNacimiento">
+		<span class="asterisco">*</span>
+		<span class="negrita">Fecha de nacimiento</span>
+		<input type="text" name="fechaNacimiento" id="fechaNacimiento" value="" />
+	</label>
+	<br />
+	<label for="siglasGenero">
+		<span class="asterisco">*</span>
+		<span class="negrita">Género</span>
+		<input type="radio" name="siglasGenero" value="H" id="genero_1" /><span>Hombre</span>
+		<input type="radio" name="siglasGenero" value="M" id="genero_2" /><span>Mujer</span>
+		<input type="radio" name="siglasGenero" value="O" id="genero_3" checked="checked" /><span>Otro</span>
+	</label>  
+	<input type="button" value="Deseleccionar género" onclick="deseleccionaRadio('siglasGenero');" />
+	<br />
+	<label for="siglasPais">
+		<span class="asterisco">*</span>
+		<span class="negrita">País</span>
+		<select name="siglasPais" id="pais">
+			<option value="ES">España</option>
+			<option value="FR">Francia</option>
+			<option value="IT" selected="selected">Italia</option>
+			<option value="PT">Portugal</option>
+		</select>
+	</label>  
+	<br />
+	<label for="siglasAficiones">
+		<span class="asterisco">*</span>
+		<span class="negrita">Aficiones</span>
+		<input type="checkbox" name="siglasAficiones" value="C" id="aficion_1" /><span>Cine</span>
+		<input type="checkbox" name="siglasAficiones" value="D" id="aficion_2" checked="checked" /><span>Deporte</span>
+		<input type="checkbox" name="siglasAficiones" value="L" id="aficion_3" checked="checked" /><span>Lectura</span>
+		<input type="checkbox" name="siglasAficiones" value="M" id="aficion_4" /><span>Música</span>
+	</label>
+	<input type="button" value="Deseleccionar checkboxes" onclick="conmutaListaCheckboxes('siglasAficiones', '');" />
+	<input type="button" value="Seleccionar todos los checkboxes" onclick="conmutaListaCheckboxes('siglasAficiones', 'selected');" />	
+	<br />
+	<label for="musicas">
+		<span class="asterisco">*</span>
+		<span class="negrita">Musicas</span>
+		<select name="siglasMusicas" id="musicas" multiple="multiple" size="5">
+			<option value="C">Country</option>
+			<option value="E" selected="selected">Electrónica</option>
+			<option value="N" selected="selected">New age</option>
+			<option value="P">Pop</option>
+			<option value="R">Rock</option>
+		</select>
+	</label>
+	<input type="button" value="Deseleccionar todas opciones" onclick="conmutaSelectMultiple('siglasMusicas', '');" />
+	<input type="button" value="Seleccionar todas opciones" onclick="conmutaSelectMultiple('siglasMusicas', 'selected');" />		
+	<br />
+	<label for="comentarios">	
+		<span class="negrita">Comentarios</span>
+		<textarea name="comentarios" id="comentarios">Introduce tus comentarios</textarea>
+	</label>	
+	<br /><br />
+	<fieldset>
+	<legend>Gestión del formulario</legend>
+		<input type="reset" value="Resetear formulario" />
+		<input type="button" value="Vaciar formulario" onclick="vaciaFormulario(this.form);" />  
+		<input type="submit" value="Enviar formulario" />
+		<input type="image" src="img/enviar.jpg" id="flecha" alt="Enviar formulario" />
+	</fieldset>
+</form>
+</body>
+</html>

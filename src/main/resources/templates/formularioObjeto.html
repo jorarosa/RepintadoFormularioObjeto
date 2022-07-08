@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Formulario con pelo</title>
+	<link rel="icon" href="data:,">
+	<link rel="stylesheet" href="css/estilos.css" />
+	<script src="js/funciones.js"></script>
+</head>
+<body>
+<h1>Formulario</h1>
+
+<form action="/repintadoFormulario" method="post" th:object="${datosFormulario}">
+
+<div th:if="${#fields.hasErrors('global')}">
+    <p th:each="error : ${#fields.errors('global')}" th:text="${error}" class="rojo negrita" />
+</div>
+
+	<input type = "hidden" value="3.1416" />
+	<label for="nombre">
+		<span class="asterisco">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.nombre}" />
+		<input type="text" th:field="*{nombre}" />
+	</label>
+	<span class="rojo negrita" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"/>
+	<br />
+	<label for="clave">
+		<span class="asterisco">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.clave}" />
+		<input type="password" th:field="*{clave}" />
+	</label>
+	<span class="rojo negrita" th:if="${#fields.hasErrors('clave')}" th:errors="*{clave}"/>
+	<br />
+	<button type="button" onclick="cambiaVisionClaves();"><img th:src="@{/img/ver.png}" width="10" height="10" /></button>
+	<br />	
+	<label for="confirmarClave">
+		<span class="asterisco">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.confirmarClave}" />
+		<input type="password" th:field="*{confirmarClave}" />
+	</label>
+	<span class="rojo negrita" th:if="${#fields.hasErrors('confirmarClave')}" th:errors="*{confirmarClave}"/>	
+	<br />
+	<label for="edad">
+		<span class="asterisco">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.edad}" />
+		<input type="text" th:field="*{edad}" />
+	</label>
+	<span class="rojo negrita" th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"/>	
+	<br />
+	<label for="fechaNacimiento">
+		<span class="asterisco">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.fechaNacimiento}" />
+		<input type="text" th:field="*{fechaNacimiento}" />
+	</label>
+	<span class="rojo negrita" th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"/>	
+	<br />
+	<label for="email">
+		<span class="asterisco">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.email}" />
+		<input type="text" th:field="*{email}" />
+	</label>
+	<span class="rojo negrita" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/>	
+	<br />
+	<label for="siglasGenero">
+		<span class="rojo negrita">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.genero}" />
+		<th:block th:each="genero : ${listaGenerosOrdenada}">
+			<input type="radio" th:field="*{siglasGenero}" th:id="${genero.value}" th:value="${genero.key}" th:checked="${genero.key == siglasGenero}"/>
+			<span th:text="${genero.value}"/>
+		</th:block>
+  	</label>
+	<input type="button" value="Deseleccionar género" onclick="deseleccionaRadio('siglasGenero');" />
+	<span class="rojo negrita" th:if="${#fields.hasErrors('siglasGenero')}" th:errors="*{siglasGenero}"/>
+	<br />	
+	<label for="siglasPais">
+		<span class="rojo negrita">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.pais}" />
+		<select th:field="*{siglasPais}">
+		<th:block th:each="pais : ${listaPaisesOrdenada}">
+			<option th:value="${pais.key}" th:selected="${pais.key == siglasPais}"><th:block th:text="${pais.value}" /></option>
+		</th:block>
+		</select>
+	</label>	
+	<span class="rojo negrita" th:if="${#fields.hasErrors('siglasPais')}" th:errors="*{siglasPais}"/>
+	<br />
+	<label for="siglasAficiones">
+		<span class="rojo negrita">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.aficiones}" />
+		<th:block th:each="aficion : ${listaAficionesOrdenada}">
+			<input type="checkbox" th:field="*{siglasAficiones}" th:value="${aficion.key}" th:checked="${siglasAficiones != null} and ${#lists.contains(siglasAficiones, aficion.key)}"/>
+			<!-- th:id="${aficion.value}" -->
+			<span th:text="${aficion.value}"/>
+		</th:block>
+	</label>
+	<input type="button" value="Deseleccionar checkboxes" onclick="conmutaListaCheckboxes('siglasAficiones', '');" />
+	<input type="button" value="Seleccionar todos los checkboxes" onclick="conmutaListaCheckboxes('siglasAficiones', 'selected');" />		
+	<span class="rojo negrita" th:if="${#fields.hasErrors('siglasAficiones')}" th:errors="*{siglasAficiones}"/>
+	<br />
+	<label for="siglasMusicas">
+		<span class="asterisco">*</span>
+		<span class="negrita" th:text="#{formulario.etiqueta.musicas}" />
+		<select th:field="*{siglasMusicas}" th:multiple="multiple" th:size="5">
+		<th:block th:each="musica : ${listaMusicasOrdenada}">
+			<option th:value="${musica.key}" th:selected="${siglasMusicas != null} and ${#lists.contains(siglasMusicas, musica.key)}">
+				<th:block th:text="${musica.value}" />
+			</option>				
+		</th:block>
+		</select>
+	</label>
+	<input type="button" value="Deseleccionar todas opciones" onclick="conmutaSelectMultiple('siglasMusicas', '');" />
+	<input type="button" value="Seleccionar todas opciones" onclick="conmutaSelectMultiple('siglasMusicas', 'selected');" />
+	<span class="rojo negrita" th:if="${#fields.hasErrors('siglasMusicas')}" th:errors="*{siglasMusicas}"/>
+	<br />
+	<label for="comentarios">	
+		<span class="negrita" th:text="#{formulario.etiqueta.comentarios}" />
+		<textarea th:field="*{comentarios}">Introduce tus comentarios</textarea>
+	</label>
+	<span class="rojo negrita" th:if="${#fields.hasErrors('comentarios')}" th:errors="*{comentarios}"/>
+	<br />
+	<fieldset>
+	<legend>Gestión del formulario</legend>
+		<input type="reset" value="Resetear formulario" />
+		<input type="button" value="Vaciar formulario" onclick="vaciaFormulario(this.form);" />  
+		<input type="submit" value="Enviar formulario" />
+		<input type="image" src="img/enviar.jpg" id="flecha" alt="Enviar formulario" />
+	</fieldset>
+</form>
+</body>
+</html>
